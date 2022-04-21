@@ -84,11 +84,12 @@ hr {
 }
 
 .answer {
-    height: 24.5px;
+    height: fit-content;
     width: fit-content;
-    padding: 5px 15px 0 15px;
+    padding: 5px 15px 5px 15px;
     border: 0.8px solid #4D5B9E;
     box-sizing: border-box;
     border-radius: 8px;
     margin: 0 13px 0 0;
+    text-align: center;
 }

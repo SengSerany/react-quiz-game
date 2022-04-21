@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import Homepage from "./components/Homepage";
-import Quiz from "./components/Quiz";
+import Questions from "./components/Questions";
 
 export default function App() {
 
     const [ enterTheGame, setEnterTheGame] = useState(false)
     const [ questions, setQuestions] = useState([])
+
+    const parseEntities = txt => new DOMParser().parseFromString(txt, 'text/html').body.innerText;
 
 
     const letsPlay = () => {
@@ -20,16 +23,33 @@ export default function App() {
         }
         callAPI()
     }, [])
+    
+    const mapQuestions = () => {
+        return questions.map( questionObject => {
+            const qAnswers = [];
+            qAnswers.push({value: parseEntities(questionObject.correct_answer), id: nanoid()})
+            for (let i = 0; i < questionObject.incorrect_answers.length; i++) {
+                console.log(questionObject.incorrect_answers)
+                qAnswers.push({value: parseEntities(questionObject.incorrect_answers[i]), id: nanoid()})
+            }
+            qAnswers.sort()
 
-    const arrayAnswers = ["yes", "No", "Maybe", "Dunno"]
+            return (
+                <Questions
+                    arrayQuestionObjects = {parseEntities(questionObject.question)}
+                    arrayAnswers ={qAnswers}
+                    keyID = {nanoid()}
+                />
+            )
+
+        })
+    }
+
     if (enterTheGame) { 
 
         return(
             <div className="app">
-                <Quiz
-                    arrayQuestionObjects = {questions}
-                    arrayAnswers ={arrayAnswers}
-                />
+                {mapQuestions()}
             </div>
         )
     } else {
