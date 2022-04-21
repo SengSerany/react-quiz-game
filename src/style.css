@@ -4,4 +4,91 @@
 
 body {
     margin: 0;
+    font-family: Inter;
+    background-color: #F5F7FB;
+    opacity: 0.8;
+    background: repeating-linear-gradient( 45deg, #FFFAD1, #FFFAD1 5px, #F5F7FB 5px, #F5F7FB 25px );
+    color: #293264;
+}
+
+
+main.homepage {
+    display: flex;
+    flex-direction: column;
+    width: 210px;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.homepage > h1 {
+    font-family: 'Karla';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 37px;
+    margin: 0;
+}
+
+.homepage > p {
+    margin: 7px 0 29px 0;
+}
+
+main.homepage > button {
+    width: 193px;
+    height: 52px;
+    left: 179px;
+    top: 314px;
+    color: white;
+    background-color: #4D5B9E;
+    border-radius: 15px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.app {
+    padding-top: 40px;
+}
+
+hr {
+    border: 0.8px solid #d0d1dd;
+    margin: 15px 0 0 0;
+}
+
+.quiz-body {
+    background-color: rgba(222, 235, 248, 0.7);
+    border-radius: 5px;
+    width: 800px;
+    margin: auto;
+    padding: 15px 30px 0 30px;
+
+}
+
+.questions {
+    font-family: 'Karla';
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 19px;
+    margin: 0;
+}
+
+.answers {
+    margin-top: 12px;
+    display: flex;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 12px;
+}
+
+.answer {
+    height: 24.5px;
+    width: fit-content;
+    padding: 5px 15px 0 15px;
+    border: 0.8px solid #4D5B9E;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin: 0 13px 0 0;
 }
