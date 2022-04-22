@@ -1,20 +1,12 @@
 import React from "react";
+import Answers from "./Answers";
 
-
-export default function Questions({arrayQuestionObjects, arrayAnswers}) {
-
-    const mapAnswers = () => {
-        return arrayAnswers.map( answer => {
-            return<p className="answer">{answer.value}</p>
-        })
-    }
+export default function Questions({question, arrayAnswers, answerSelected}) {
 
     return(
         <div className="quiz-body">
-            <h5 className="questions">{arrayQuestionObjects}</h5>
-            <div className="answers">
-                {mapAnswers()}
-            </div>
+            <h5 key={question.id} id={question.id} className="questions">{question}</h5>
+            <Answers arrayAnswers={arrayAnswers} answerSelected={answerSelected}/>
             <hr></hr>
         </div>
     )

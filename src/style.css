@@ -92,4 +92,10 @@ hr {
     border-radius: 8px;
     margin: 0 13px 0 0;
     text-align: center;
+    font-weight: 500;
+}
+
+.answer.selected{
+    background-color: #D6DBF5;
+    border: none;
 }
