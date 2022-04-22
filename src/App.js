@@ -2,21 +2,16 @@ import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import Homepage from "./components/Homepage";
 import Questions from "./components/Questions";
+import Footer from "./components/Footer";
 
 export default function App() {
 
     const [ enterTheGame, setEnterTheGame] = useState(false)
     const [ questions, setQuestions] = useState([])
-    const [ answers, setAnswers] = useState(() => {
-        if (questions) {
-            
-        } else {
-            return []
-        }
-    })
+    const [ answers, setAnswers] = useState([])
+    const [ end, setEnd ] = useState(false)
 
     const parseEntities = txt => new DOMParser().parseFromString(txt, 'text/html').body.innerText;
-
 
     const letsPlay = () => {
         setEnterTheGame(true);
@@ -40,7 +35,9 @@ export default function App() {
                 value: parseEntities(questions[i].correct_answer),
                 question_id: questions[i].id,
                 id: nanoid(),
-                isSelected: false
+                isSelected: false,
+                correct: true,
+                showCorrect: false
             })
 
             for (let j = 0; j < questions[i].incorrect_answers.length; j++) {
@@ -48,7 +45,9 @@ export default function App() {
                     value: parseEntities(questions[i].incorrect_answers[j]),
                     question_id: questions[i].id,
                     id: nanoid(),
-                    isSelected: false
+                    isSelected: false,
+                    correct: false,
+                    showCorrect: false
                 })
             }
         }
@@ -87,21 +86,46 @@ export default function App() {
         })
     }
 
+    const checkAnswers = () => {
+    
+        const selectedAnswers = answers
+            .filter(answer => {
+                return answer.isSelected && answer
+            })
+
+        if (selectedAnswers.length !== 5) {
+            return window.alert("You must select one answer on each question :o..")
+        } else {
+            ending()
+            return setAnswers(prevAnswersArray => {
+                return prevAnswersArray.map(answer => {
+                    return { ...answer, showCorrect: !answer.showCorrect}
+                })
+            })
+        }
+    }
+
+    const ending = () => {
+        return setEnd(true);
+    }
+
     if (enterTheGame) { 
 
         return(
             <div className="app">
                 {mapQuestions()}
+                <Footer
+                    handleCheckAnswers = {checkAnswers}
+                    endStatus = {end}
+                />
             </div>
         )
     } else {
         return(
-            <div className="app">
                 <Homepage
                     play = {letsPlay}
                     prepareAnswers = {organizeAnswers}
                 />
-            </div>
         )
     }
 }

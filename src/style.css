@@ -6,11 +6,24 @@ body {
     margin: 0;
     font-family: Inter;
     background-color: #F5F7FB;
-    opacity: 0.8;
-    background: repeating-linear-gradient( 45deg, #FFFAD1, #FFFAD1 5px, #F5F7FB 5px, #F5F7FB 25px );
     color: #293264;
+    background-color: #F5F7FB;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23aaffff' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%23baffac' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23a5fffb' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%23c4ffa0' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23a1fff7' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%23d0fe94' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%239dfff2' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%23ddfd88' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%239affed' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%23eafb7c' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%2398ffe7' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%23f9f871' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
 }
 
+#root {
+    padding-top: 40px;
+}
+
+.app {
+    background-color: rgba(222, 235, 248, 0.7);
+    border-radius: 5px;
+    width: 800px;
+    margin: auto;
+    padding: 15px 30px 0 30px;
+}
 
 main.homepage {
     display: flex;
@@ -20,7 +33,7 @@ main.homepage {
     margin: auto;
     align-items: center;
     text-align: center;
-    min-height: 100vh;
+    min-height: 80vh;
 }
 
 .homepage > h1 {
@@ -49,22 +62,9 @@ main.homepage > button {
     line-height: 19px;
 }
 
-.app {
-    padding-top: 40px;
-}
-
 hr {
     border: 0.8px solid #d0d1dd;
-    margin: 15px 0 0 0;
-}
-
-.quiz-body {
-    background-color: rgba(222, 235, 248, 0.7);
-    border-radius: 5px;
-    width: 800px;
-    margin: auto;
-    padding: 15px 30px 0 30px;
-
+    margin: 20px 0 20px 0;
 }
 
 .questions {
@@ -76,7 +76,7 @@ hr {
 }
 
 .answers {
-    margin-top: 12px;
+    margin-top: 16px;
     display: flex;
     font-weight: 500;
     font-size: 14px;
@@ -98,4 +98,55 @@ hr {
 .answer.selected{
     background-color: #D6DBF5;
     border: none;
+}
+
+.answer.check-right{
+    background-color: #94D7A2;
+    border: none;
+}
+
+.answer.check-wrong{
+    background-color: #F8BCBC;
+    opacity: 50%;
+    border: none;
+}
+
+.answer.check{
+    opacity: 50%;
+}
+
+footer {
+    display: flex;
+}
+
+.endgame-div {
+    display: flex;
+    margin: 0 auto 0 auto;
+    margin: auto auto 25px auto;
+
+}
+
+.endgame-div > h5 {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 19px;
+    margin: 0 20px 0 0;
+    align-self: center;
+}
+
+.footer--btn {
+    width: 140px;
+    height: 45px;
+    background-color: #4D5B9E;
+    color: #FFFFFF;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    text-align: center;
+    border: none;
+}
+
+.footer--btn.ingame {
+    margin: auto auto 25px auto;
 }

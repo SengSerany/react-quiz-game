@@ -12,7 +12,27 @@ export default function Answers({arrayAnswers, answerSelected}) {
         return 0;
       }
       
-      const answersSort = arrayAnswers.sort( compare );
+    const answersSort = arrayAnswers.sort( compare );
+
+    const checkAnswer = (answer) => {
+        if (answer.showCorrect){
+            if (answer.correct && answer.isSelected) {
+                    return "answer check-right";
+            } else if (answer.correct && !answer.isSelected) {
+                    return "answer check-right";
+            } else if (!answer.correct && answer.isSelected) {
+                    return "answer check-wrong";
+            } else if (!answer.correct && !answer.isSelected) {
+                    return "answer check";
+            }
+        } else {
+            if (answer.isSelected) {
+                return "answer selected"
+            } else {
+                return "answer"
+            }
+        }
+    }
 
     const mapAnswers = () => {
         return answersSort.map( answer => {
@@ -20,7 +40,7 @@ export default function Answers({arrayAnswers, answerSelected}) {
                 <div
                     key={answer.id}
                     id={answer.id}
-                    className={answer.isSelected ? "answer selected" : "answer"}
+                    className={checkAnswer(answer)}
                     onClick={() => answerSelected(answer.id, answer.question_id)}>
                         {answer.value}
                     </div>
