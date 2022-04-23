@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 export default function App() {
 
     const [ enterTheGame, setEnterTheGame] = useState(false)
+    const [ start, setStart] = useState(true)
     const [ questions, setQuestions] = useState([])
     const [ answers, setAnswers] = useState([])
     const [ end, setEnd ] = useState(false)
@@ -21,53 +22,51 @@ export default function App() {
         const callAPI = async () => {
             const res = await fetch("https://opentdb.com/api.php?amount=5&difficulty=medium&type=multiple");
             const data = await res.json();
+            const allAnswers = []
             setQuestions(data.results.map( questionsNoId => {
-                return {...questionsNoId, id: nanoid()}
-            }))
-        }
-        callAPI()
-    }, [])
-    
-    const organizeAnswers = () => {
-        const allAnswers = []
-        for (let i = 0; i < questions.length; i++) {
-            allAnswers.push({
-                value: parseEntities(questions[i].correct_answer),
-                question_id: questions[i].id,
-                id: nanoid(),
-                isSelected: false,
-                correct: true,
-                showCorrect: false
-            })
-
-            for (let j = 0; j < questions[i].incorrect_answers.length; j++) {
+                const questionWithId = {...questionsNoId, id: nanoid()}
+                
                 allAnswers.push({
-                    value: parseEntities(questions[i].incorrect_answers[j]),
-                    question_id: questions[i].id,
+                    value: parseEntities(questionWithId.correct_answer),
+                    question_id: questionWithId.id,
                     id: nanoid(),
                     isSelected: false,
-                    correct: false,
+                    correct: true,
                     showCorrect: false
                 })
-            }
+                
+                for (let j = 0; j < questionWithId.incorrect_answers.length; j++) {
+                    allAnswers.push({
+                        value: parseEntities(questionWithId.incorrect_answers[j]),
+                        question_id: questionWithId.id,
+                        id: nanoid(),
+                        isSelected: false,
+                        correct: false,
+                        showCorrect: false
+                    })
+                }
+                return questionWithId
+            }))
+            setAnswers(allAnswers)
+            setEnd(false)
         }
-        return setAnswers(allAnswers)
-    }
+        callAPI()
+        
+    }, [start])
 
     const mapQuestions = () => {
         return questions.map( questionObject => {
 
             const answersOfQuestion = answers.filter(answer => answer.question_id === questionObject.id);
 
-
             return (
                 <Questions
                     question = {parseEntities(questionObject.question)}
                     arrayAnswers ={answersOfQuestion}
                     answerSelected = {selectAnAnswer}
+                    key = {nanoid()}
                 />
             )
-
         })
     }
 
@@ -86,8 +85,8 @@ export default function App() {
         })
     }
 
-    const checkAnswers = () => {
     
+    const checkAnswers = () => {
         const selectedAnswers = answers
             .filter(answer => {
                 return answer.isSelected && answer
@@ -109,6 +108,16 @@ export default function App() {
         return setEnd(true);
     }
 
+    const setNewGame = () => {
+        setStart(prevGameState => {
+            return !prevGameState;
+        })
+    }
+
+    const checkCorrectAnswerNb = () => {
+        return answers.filter(answer => answer.correct && answer.isSelected)
+    }
+
     if (enterTheGame) { 
 
         return(
@@ -117,6 +126,8 @@ export default function App() {
                 <Footer
                     handleCheckAnswers = {checkAnswers}
                     endStatus = {end}
+                    handleNewGame = {setNewGame}
+                    goodAnswersNb = {checkCorrectAnswerNb}
                 />
             </div>
         )
@@ -124,7 +135,6 @@ export default function App() {
         return(
                 <Homepage
                     play = {letsPlay}
-                    prepareAnswers = {organizeAnswers}
                 />
         )
     }

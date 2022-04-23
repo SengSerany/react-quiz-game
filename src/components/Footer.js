@@ -1,9 +1,8 @@
 import React from "react";
 
-export default function Footer({handleCheckAnswers, endStatus}) {
+export default function Footer({handleCheckAnswers, endStatus, handleNewGame, goodAnswersNb}) {
 
     const checkOrRestart = () => {
-        console.log(endStatus)
         if (!endStatus) {
             return (
                 <button 
@@ -13,10 +12,11 @@ export default function Footer({handleCheckAnswers, endStatus}) {
                 >Check answers</button>
             )
         } else {
+
             return (
                 <div className="endgame-div">
-                    <h5>You scored x/5 correct answers</h5>
-                    <button type="button" className="footer--btn offgame">Play again</button>
+                    <h5>You scored {goodAnswersNb().length}/5 correct answer{goodAnswersNb().length > 1 && "s"}</h5>
+                    <button type="button" className="footer--btn offgame" onClick={handleNewGame}>Play again</button>
                 </div>
             )
         }

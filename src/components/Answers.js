@@ -34,6 +34,7 @@ export default function Answers({arrayAnswers, answerSelected}) {
         }
     }
 
+
     const mapAnswers = () => {
         return answersSort.map( answer => {
             return (
