@@ -115,6 +115,14 @@ hr {
     opacity: 50%;
 }
 
+.alert {
+    height: 60px;
+    line-height: 60px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: rgba(248, 188, 188, 0.5);
+}
+
 footer {
     display: flex;
 }

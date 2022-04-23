@@ -3,14 +3,16 @@ import { nanoid } from "nanoid";
 import Homepage from "./components/Homepage";
 import Questions from "./components/Questions";
 import Footer from "./components/Footer";
+import Alert from "./components/Alert";
 
 export default function App() {
 
     const [ enterTheGame, setEnterTheGame] = useState(false)
     const [ start, setStart] = useState(true)
+    const [ end, setEnd ] = useState(false)
     const [ questions, setQuestions] = useState([])
     const [ answers, setAnswers] = useState([])
-    const [ end, setEnd ] = useState(false)
+    const [ alertOnGoing, setAlertOnGoing] = useState(false)
 
     const parseEntities = txt => new DOMParser().parseFromString(txt, 'text/html').body.innerText;
 
@@ -93,8 +95,9 @@ export default function App() {
             })
 
         if (selectedAnswers.length !== 5) {
-            return window.alert("You must select one answer on each question :o..")
+            return setAlertOnGoing(true)
         } else {
+            if (alertOnGoing) { setAlertOnGoing(false) }
             ending()
             return setAnswers(prevAnswersArray => {
                 return prevAnswersArray.map(answer => {
@@ -123,6 +126,7 @@ export default function App() {
         return(
             <div className="app">
                 {mapQuestions()}
+                {alertOnGoing && <Alert />}
                 <Footer
                     handleCheckAnswers = {checkAnswers}
                     endStatus = {end}
