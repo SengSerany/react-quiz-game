@@ -123,6 +123,10 @@ hr {
     background-color: rgba(248, 188, 188, 0.5);
 }
 
+.alert.unshow{
+    display: none;
+}
+
 footer {
     display: flex;
 }
