@@ -6,52 +6,55 @@ import Footer from "./components/Footer";
 import Alert from "./components/Alert";
 import Toggler from "./components/Toggler";
 
-export default function App({on, toggle}) {
+export default function App({inGame, inGameToggle}) {
 
-    const [ start, setStart] = useState(true)
-                    const [ end, setEnd ] = useState(false)
-                    const [ questions, setQuestions] = useState([])
-                    const [ answers, setAnswers] = useState([])
+    const [ gameStatus, setGameStatus] = useState(true)
+    const [ questions, setQuestions] = useState([])
+    const [ answers, setAnswers] = useState([])
                 
-                    const parseEntities = txt => new DOMParser().parseFromString(txt, 'text/html').body.innerText;
+    const parseEntities = txt => new DOMParser().parseFromString(txt, 'text/html').body.innerText;
                     
-                    useEffect(() => {
-                        const callAPI = async () => {
-                            const res = await fetch("https://opentdb.com/api.php?amount=5&difficulty=medium&type=multiple");
-                            const data = await res.json();
-                            const allAnswers = []
-                            setQuestions(data.results.map( questionsNoId => {
-                                const questionWithId = {...questionsNoId, id: nanoid()}
-                                
-                                allAnswers.push({
-                                    value: parseEntities(questionWithId.correct_answer),
-                                    question_id: questionWithId.id,
-                                    id: nanoid(),
-                                    isSelected: false,
-                                    correct: true,
-                                    showCorrect: false
-                                })
-                                
-                                for (let j = 0; j < questionWithId.incorrect_answers.length; j++) {
-                                    allAnswers.push({
-                                        value: parseEntities(questionWithId.incorrect_answers[j]),
-                                        question_id: questionWithId.id,
-                                        id: nanoid(),
-                                        isSelected: false,
-                                        correct: false,
-                                        showCorrect: false
-                                    })
-                                }
-                                return questionWithId
-                            }))
-                            setAnswers(allAnswers)
-                            setEnd(false)
-                        }
-                        callAPI()
-                        
-                    }, [start])
+    useEffect(() => {
 
-    if (on) { 
+        const callAPI = async () => {
+            const res = await fetch("https://opentdb.com/api.php?amount=5&difficulty=medium&type=multiple");
+            const data = await res.json();
+            const allAnswers = []
+            setQuestions(data.results.map( questionsNoId => {
+                const questionWithId = {...questionsNoId, id: nanoid()}
+                                
+                allAnswers.push({
+                    value: parseEntities(questionWithId.correct_answer),
+                    question_id: questionWithId.id,
+                    id: nanoid(),
+                    isSelected: false,
+                    correct: true,
+                    showCorrect: false
+                })
+                                
+                for (let j = 0; j < questionWithId.incorrect_answers.length; j++) {
+                    allAnswers.push({
+                        value: parseEntities(questionWithId.incorrect_answers[j]),
+                        question_id: questionWithId.id,
+                        id: nanoid(),
+                        isSelected: false,
+                        correct: false,
+                        showCorrect: false
+                    })
+                }
+                return questionWithId
+            }))
+
+            setAnswers(allAnswers)
+            // setEnd(false)
+            
+        }
+
+        callAPI()
+                        
+    }, [gameStatus])
+    
+    if (inGame) { 
 
         return(
             <Toggler render = {
@@ -88,7 +91,7 @@ export default function App({on, toggle}) {
                         })
                     }
                 
-                    const checkAnswers = () => {
+                    const checkAnswers = (endTheGame) => {
                         const selectedAnswers = answers
                             .filter(answer => {
                                 return answer.isSelected && answer
@@ -100,7 +103,7 @@ export default function App({on, toggle}) {
                             }
                         } else {
                             if (alertOn) { alertToggle() }
-                            ending()
+                            endTheGame()
                             return setAnswers(prevAnswersArray => {
                                 return prevAnswersArray.map(answer => {
                                     return { ...answer, showCorrect: !answer.showCorrect}
@@ -109,30 +112,36 @@ export default function App({on, toggle}) {
                         }
                     }
                 
-                    const ending = () => {
-                        return setEnd(true);
-                    }
-                
-                    const setNewGame = () => {
-                        setStart(prevGameState => {
+                    const setNewGame = (retry) => {
+                        setGameStatus(prevGameState => {
                             return !prevGameState;
                         })
+                        retry()
                     }
                 
                     const checkCorrectAnswerNb = () => {
-                        return answers.filter(answer => answer.correct && answer.isSelected)
+                        const answersSelectedAndRight = answers.filter(answer => answer.correct && answer.isSelected)
+                        return  answersSelectedAndRight.length;
                     }
 
                     return(
                         <div className="app">
                             {mapQuestions()}
                             <Alert alertOn={alertOn} />
-                            <Footer
-                                handleCheckAnswers = {checkAnswers}
-                                endStatus = {end}
-                                handleNewGame = {setNewGame}
-                                goodAnswersNb = {checkCorrectAnswerNb}
-                            />
+                            <Toggler render={
+                                (footerOn, footerToggle) => {
+                                
+                                    return (
+                                        <Footer
+                                            handleCheckAnswers = {checkAnswers}
+                                            endStatus = {footerOn}
+                                            endTheGame = {footerToggle}
+                                            handleNewGame = {setNewGame}
+                                            goodAnswersNb = {checkCorrectAnswerNb}
+                                        />
+                                    )
+                                }
+                            } />
                         </div>
                     )
                 }
@@ -142,7 +151,7 @@ export default function App({on, toggle}) {
     } else {
         return(
                 <Homepage
-                    play = {toggle}
+                    play = {inGameToggle}
                 />
         )
     }

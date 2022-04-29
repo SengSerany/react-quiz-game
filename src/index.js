@@ -10,9 +10,9 @@ const root = ReactDOM.createRoot(container);
 
 root.render(
     <Toggler render={
-        (on, toggle) => {
+        (inGame, inGameToggle) => {
             return(
-                <App on={on} toggle={toggle} />
+                <App inGame={inGame} inGameToggle={inGameToggle} />
             )
         }
     } />
