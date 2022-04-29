@@ -5,9 +5,8 @@ import Questions from "./components/Questions";
 import Footer from "./components/Footer";
 import Alert from "./components/Alert";
 
-export default function App() {
+export default function App({on, toggle}) {
 
-    const [ enterTheGame, setEnterTheGame] = useState(false)
     const [ start, setStart] = useState(true)
     const [ end, setEnd ] = useState(false)
     const [ questions, setQuestions] = useState([])
@@ -15,10 +14,6 @@ export default function App() {
     const [ alertOnGoing, setAlertOnGoing] = useState(false)
 
     const parseEntities = txt => new DOMParser().parseFromString(txt, 'text/html').body.innerText;
-
-    const letsPlay = () => {
-        setEnterTheGame(true);
-    }
     
     useEffect(() => {
         const callAPI = async () => {
@@ -121,7 +116,7 @@ export default function App() {
         return answers.filter(answer => answer.correct && answer.isSelected)
     }
 
-    if (enterTheGame) { 
+    if (on) { 
 
         return(
             <div className="app">
@@ -138,7 +133,7 @@ export default function App() {
     } else {
         return(
                 <Homepage
-                    play = {letsPlay}
+                    play = {toggle}
                 />
         )
     }

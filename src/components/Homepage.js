@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Homepage({play, prepareAnswers}) {
+export default function Homepage({play}) {
     return(
         <main className="homepage">
             <h1>Quizzical</h1>
