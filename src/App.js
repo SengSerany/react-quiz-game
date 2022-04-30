@@ -7,6 +7,7 @@ import Alert from "./components/Alert";
 import Toggler from "./components/Toggler";
 import { checkAnswers } from "./functions/checkAnswers";
 import { checkCorrectAnswerNb } from "./functions/checkCorrectAnswerNb";
+import { setNewGame } from "./functions/setNewGame";
 
 export default function App({inGame, inGameToggle, newCycleStatus, handleRestart, lanchNewGame}) {
 
@@ -97,12 +98,6 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
                             })
                         })
                     }
-                
-                    const setNewGame = () => {
-                        setGameStatus(prevGameState => {
-                            return !prevGameState;
-                        })
-                    }
 
                     const nbCorrectAnswer = checkCorrectAnswerNb(answers)
 
@@ -114,7 +109,7 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
                             <Footer
                                 handleCheckAnswers = {() => {checkAnswers(answers, alertOn, alertToggle, setAnswers, handleRestart)}}
                                 endStatus = {newCycleStatus}
-                                handleNewGame = {setNewGame}
+                                handleNewGame = {() => {setNewGame(setGameStatus)}}
                                 goodAnswersNb = {nbCorrectAnswer}
                             />
                         </div>
