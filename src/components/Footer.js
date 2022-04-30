@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Footer({handleCheckAnswers, endStatus, endPhase, handleNewGame, goodAnswersNb}) {
+export default function Footer({handleCheckAnswers, endStatus, handleNewGame, goodAnswersNb}) {
 
     const goodAnswersNbProp = goodAnswersNb()
 
@@ -10,11 +10,10 @@ export default function Footer({handleCheckAnswers, endStatus, endPhase, handleN
                 <button 
                     type="button"
                     className="footer--btn ingame"
-                    onClick={() =>{handleCheckAnswers(endPhase)}}
+                    onClick={handleCheckAnswers}
                 >Check answers</button>
             )
         } else {
-
             return (
                 <div className="endgame-div">
                     <h5>You scored {goodAnswersNbProp}/5 correct answer{goodAnswersNbProp > 1 && "s"}</h5>

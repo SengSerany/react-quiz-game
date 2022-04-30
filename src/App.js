@@ -5,6 +5,7 @@ import Questions from "./components/Questions";
 import Footer from "./components/Footer";
 import Alert from "./components/Alert";
 import Toggler from "./components/Toggler";
+import { checkAnswers } from "./functions/checkAnswers";
 
 export default function App({inGame, inGameToggle, newCycleStatus, handleRestart, lanchNewGame}) {
 
@@ -56,7 +57,7 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameStatus])
     
-    
+    // answers, alertOn, alertToggle, setAnswers, endTheGame
 
     if (inGame) { 
 
@@ -96,27 +97,6 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
                         })
                     }
                 
-                    const checkAnswers = (endTheGame) => {
-                        const selectedAnswers = answers
-                            .filter(answer => {
-                                return answer.isSelected && answer
-                            })
-                
-                        if (selectedAnswers.length !== 5) {
-                            if (!alertOn) {
-                                return alertToggle()
-                            }
-                        } else {
-                            if (alertOn) { alertToggle() }
-                            endTheGame()
-                            return setAnswers(prevAnswersArray => {
-                                return prevAnswersArray.map(answer => {
-                                    return { ...answer, showCorrect: !answer.showCorrect}
-                                })
-                            })
-                        }
-                    }
-                
                     const setNewGame = () => {
                         setGameStatus(prevGameState => {
                             return !prevGameState;
@@ -134,9 +114,8 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
                             {mapQuestions()}
                             <Alert alertOn={alertOn} />
                             <Footer
-                                handleCheckAnswers = {checkAnswers}
+                                handleCheckAnswers = {() => {checkAnswers(answers, alertOn, alertToggle, setAnswers, handleRestart)}}
                                 endStatus = {newCycleStatus}
-                                endPhase = {handleRestart}
                                 handleNewGame = {setNewGame}
                                 goodAnswersNb = {checkCorrectAnswerNb}
                             />
