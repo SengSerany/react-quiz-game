@@ -64,27 +64,14 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
             <Toggler render = {
                 (alertOn, alertToggle) => {
                 
-                    const selectAnAnswer = (answerSelectedID, concernedQuestionID) => {
-                        setAnswers( prevAnswersState => {
-                            return prevAnswersState.map(answerObject => {
-                                if (answerObject.id === answerSelectedID) {
-                                    return {...answerObject, isSelected: true} 
-                                } else if (answerObject.question_id === concernedQuestionID && answerObject.isSelected){
-                                    return {...answerObject, isSelected: !answerObject.isSelected}
-                                } else {
-                                    return answerObject
-                
-                                }
-                            })
-                        })
-                    }
+                    // answerSelectedID, concernedQuestionID, setAnswers
 
                     const nbCorrectAnswer = checkCorrectAnswerNb(answers)
 
                     return(
                         <div className="app">
 
-                            {mapQuestions(questions, answers, selectAnAnswer, parseEntities)}
+                            {mapQuestions(questions, answers, setAnswers, parseEntities)}
                             <Alert alertOn={alertOn} />
                             <Footer
                                 handleCheckAnswers = {() => {checkAnswers(answers, alertOn, alertToggle, setAnswers, handleRestart)}}

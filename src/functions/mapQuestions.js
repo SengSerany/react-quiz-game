@@ -2,7 +2,7 @@ import React from "react";
 import Questions from "../components/Questions"
 import { nanoid } from "nanoid";
 
-export function mapQuestions(questions, answers, selectAnAnswer, parseEntities) {
+export function mapQuestions(questions, answers, setAnswers, parseEntities) {
                         
     return questions.map( questionObject => {
 
@@ -12,7 +12,7 @@ export function mapQuestions(questions, answers, selectAnAnswer, parseEntities) 
             <Questions
                 question = {parseEntities(questionObject.question)}
                 arrayAnswers ={answersOfQuestion}
-                answerSelected = {selectAnAnswer}
+                setAnswers = {setAnswers}
                 key = {nanoid()}
             />
         )

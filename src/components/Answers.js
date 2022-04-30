@@ -1,6 +1,7 @@
 import React from "react";
+import { selectAnAnswer } from "../functions/selectAnAnswer";
 
-export default function Answers({arrayAnswers, answerSelected}) {
+export default function Answers({arrayAnswers, setAnswers}) {
 
     const compare = ( firstElement, secondElement) => {
         if ( firstElement.value < secondElement.value ){
@@ -42,7 +43,7 @@ export default function Answers({arrayAnswers, answerSelected}) {
                     key={answer.id}
                     id={answer.id}
                     className={checkAnswer(answer)}
-                    onClick={() => answerSelected(answer.id, answer.question_id)}>
+                    onClick={() => selectAnAnswer(answer.id, answer.question_id, setAnswers)}>
                         {answer.value}
                     </div>
                 )
