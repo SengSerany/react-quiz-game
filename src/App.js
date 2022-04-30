@@ -6,7 +6,7 @@ import Footer from "./components/Footer";
 import Alert from "./components/Alert";
 import Toggler from "./components/Toggler";
 
-export default function App({inGame, inGameToggle}) {
+export default function App({inGame, inGameToggle, newCycleStatus, handleRestart, lanchNewGame}) {
 
     const [ gameStatus, setGameStatus] = useState(true)
     const [ questions, setQuestions] = useState([])
@@ -42,6 +42,7 @@ export default function App({inGame, inGameToggle}) {
                         showCorrect: false
                     })
                 }
+                lanchNewGame()
                 return questionWithId
             }))
 
@@ -52,8 +53,11 @@ export default function App({inGame, inGameToggle}) {
 
         callAPI()
                         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameStatus])
     
+    
+
     if (inGame) { 
 
         return(
@@ -61,6 +65,7 @@ export default function App({inGame, inGameToggle}) {
                 (alertOn, alertToggle) => {
                 
                     const mapQuestions = () => {
+                        
                         return questions.map( questionObject => {
                 
                             const answersOfQuestion = answers.filter(answer => answer.question_id === questionObject.id);
@@ -112,42 +117,35 @@ export default function App({inGame, inGameToggle}) {
                         }
                     }
                 
-                    const setNewGame = (retry) => {
+                    const setNewGame = () => {
                         setGameStatus(prevGameState => {
                             return !prevGameState;
                         })
-                        retry()
                     }
                 
                     const checkCorrectAnswerNb = () => {
                         const answersSelectedAndRight = answers.filter(answer => answer.correct && answer.isSelected)
                         return  answersSelectedAndRight.length;
                     }
-
+                    
                     return(
                         <div className="app">
+
                             {mapQuestions()}
                             <Alert alertOn={alertOn} />
-                            <Toggler render={
-                                (footerOn, footerToggle) => {
-                                
-                                    return (
-                                        <Footer
-                                            handleCheckAnswers = {checkAnswers}
-                                            endStatus = {footerOn}
-                                            endTheGame = {footerToggle}
-                                            handleNewGame = {setNewGame}
-                                            goodAnswersNb = {checkCorrectAnswerNb}
-                                        />
-                                    )
-                                }
-                            } />
+                            <Footer
+                                handleCheckAnswers = {checkAnswers}
+                                endStatus = {newCycleStatus}
+                                endPhase = {handleRestart}
+                                handleNewGame = {setNewGame}
+                                goodAnswersNb = {checkCorrectAnswerNb}
+                            />
                         </div>
                     )
                 }
-            }/>
-            
+            } />
         )
+
     } else {
         return(
                 <Homepage

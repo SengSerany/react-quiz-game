@@ -9,10 +9,29 @@ const container = document.getElementById("root");
 const root = ReactDOM.createRoot(container);
 
 root.render(
-    <Toggler render={
-        (inGame, inGameToggle) => {
-            return(
-                <App inGame={inGame} inGameToggle={inGameToggle} />
+    <Toggler render = {
+        (newCycle, restartGame) => {
+            return (
+                <Toggler render={
+                    (inGame, inGameToggle) => {
+
+                        const lanchNewGame = () => {
+                            if (newCycle === true) {
+                                restartGame()
+                            }
+                        }
+
+                        return(
+                            <App
+                                inGame={ inGame }
+                                inGameToggle={ inGameToggle }
+                                newCycleStatus={ newCycle }
+                                handleRestart={ restartGame }
+                                lanchNewGame = { lanchNewGame }
+                            />
+                        )
+                    }
+                } />
             )
         }
     } />

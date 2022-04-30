@@ -56,6 +56,7 @@ main.homepage > button {
     top: 314px;
     color: white;
     background-color: #4D5B9E;
+    border: none;
     border-radius: 15px;
     font-weight: 500;
     font-size: 16px;
@@ -135,7 +136,6 @@ footer {
     display: flex;
     margin: 0 auto 0 auto;
     margin: auto auto 25px auto;
-
 }
 
 .endgame-div > h5 {
