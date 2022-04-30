@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Alert from "./components/Alert";
 import Toggler from "./components/Toggler";
 import { checkAnswers } from "./functions/checkAnswers";
+import { checkCorrectAnswerNb } from "./functions/checkCorrectAnswerNb";
 
 export default function App({inGame, inGameToggle, newCycleStatus, handleRestart, lanchNewGame}) {
 
@@ -102,12 +103,9 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
                             return !prevGameState;
                         })
                     }
-                
-                    const checkCorrectAnswerNb = () => {
-                        const answersSelectedAndRight = answers.filter(answer => answer.correct && answer.isSelected)
-                        return  answersSelectedAndRight.length;
-                    }
-                    
+
+                    const nbCorrectAnswer = checkCorrectAnswerNb(answers)
+
                     return(
                         <div className="app">
 
@@ -117,7 +115,7 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
                                 handleCheckAnswers = {() => {checkAnswers(answers, alertOn, alertToggle, setAnswers, handleRestart)}}
                                 endStatus = {newCycleStatus}
                                 handleNewGame = {setNewGame}
-                                goodAnswersNb = {checkCorrectAnswerNb}
+                                goodAnswersNb = {nbCorrectAnswer}
                             />
                         </div>
                     )
