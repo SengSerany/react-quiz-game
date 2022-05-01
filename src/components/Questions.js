@@ -1,12 +1,16 @@
 import React from "react";
-import Answers from "./Answers";
+import { mapAnswers } from "../functions/mapAnswers";
+import { sortAnswers } from "../functions/sortAnswers";
 
-export default function Questions({question, arrayAnswers, setAnswers}) {
+
+export default function Questions({question, arrayAnswers}) {
 
     return(
         <div className="quiz-body">
             <h5 key={question.id} id={question.id} className="questions">{question}</h5>
-            <Answers arrayAnswers={arrayAnswers} setAnswers={setAnswers}/>
+            <div className="answers">
+                {mapAnswers(sortAnswers(arrayAnswers))}
+            </div>
             <hr></hr>
         </div>
     )

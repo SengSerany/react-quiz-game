@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import Homepage from "./components/Homepage";
-import Footer from "./components/Footer";
-import Alert from "./components/Alert";
-import Toggler from "./components/Toggler";
 import { checkAnswers } from "./functions/checkAnswers";
 import { checkCorrectAnswerNb } from "./functions/checkCorrectAnswerNb";
 import { setNewGame } from "./functions/setNewGame";
 import { mapQuestions } from "./functions/mapQuestions";
+import { SetAnswersProvider } from "./functions/setAnswersContext";
+
+import Homepage from "./components/Homepage";
+import Footer from "./components/Footer";
+import Alert from "./components/Alert";
+import Toggler from "./components/Toggler";
 
 export default function App({inGame, inGameToggle, newCycleStatus, handleRestart, lanchNewGame}) {
 
@@ -63,15 +65,14 @@ export default function App({inGame, inGameToggle, newCycleStatus, handleRestart
         return(
             <Toggler render = {
                 (alertOn, alertToggle) => {
-                
-                    // answerSelectedID, concernedQuestionID, setAnswers
 
                     const nbCorrectAnswer = checkCorrectAnswerNb(answers)
 
                     return(
                         <div className="app">
-
-                            {mapQuestions(questions, answers, setAnswers, parseEntities)}
+                            <SetAnswersProvider value={setAnswers}>
+                                {mapQuestions(questions, answers, parseEntities)}
+                            </SetAnswersProvider>
                             <Alert alertOn={alertOn} />
                             <Footer
                                 handleCheckAnswers = {() => {checkAnswers(answers, alertOn, alertToggle, setAnswers, handleRestart)}}

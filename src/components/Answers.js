@@ -1,58 +1,19 @@
 import React from "react";
-import { selectAnAnswer } from "../functions/selectAnAnswer";
+import { SetAnswersConsumer } from "../functions/setAnswersContext";
 
-export default function Answers({arrayAnswers, setAnswers}) {
-
-    const compare = ( firstElement, secondElement) => {
-        if ( firstElement.value < secondElement.value ){
-          return -1;
-        }
-        if ( firstElement.value > secondElement.value ){
-          return 1;
-        }
-        return 0;
-      }
-      
-    const answersSort = arrayAnswers.sort( compare );
-
-    const checkAnswer = (answer) => {
-        if (answer.showCorrect){
-            if (answer.correct && answer.isSelected) {
-                    return "answer check-right";
-            } else if (answer.correct && !answer.isSelected) {
-                    return "answer check-right";
-            } else if (!answer.correct && answer.isSelected) {
-                    return "answer check-wrong";
-            } else if (!answer.correct && !answer.isSelected) {
-                    return "answer check";
-            }
-        } else {
-            if (answer.isSelected) {
-                return "answer selected"
-            } else {
-                return "answer"
-            }
-        }
-    }
-
-
-    const mapAnswers = () => {
-        return answersSort.map( answer => {
-            return (
-                <div
-                    key={answer.id}
-                    id={answer.id}
-                    className={checkAnswer(answer)}
-                    onClick={() => selectAnAnswer(answer.id, answer.question_id, setAnswers)}>
-                        {answer.value}
-                    </div>
-                )
-        })
-    }
+export default function Answers({answer, answerClass, selectAnAnswer}) {
 
     return(
-        <div className="answers">
-                {mapAnswers()}
-        </div>
+        <SetAnswersConsumer>
+            { setAnswers => (
+                <div
+                    id={answer.id}
+                    className={answerClass}
+                    onClick={() => selectAnAnswer(answer.id, answer.question_id, setAnswers)}>
+                    {answer.value}
+                </div>
+            )}
+        </SetAnswersConsumer>
+        
     )
 }
