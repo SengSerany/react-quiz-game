@@ -1,6 +1,6 @@
 import React from "react";
-import { mapAnswers } from "../functions/mapAnswers";
-import { sortAnswers } from "../functions/sortAnswers";
+import { mapAnswers } from "../functions/useMapAnswers";
+import { sortAnswers } from "../functions/useSortAnswers";
 
 
 export default function Questions({question, arrayAnswers}) {

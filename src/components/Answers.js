@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { setAnswersContext } from "../functions/setAnswersContext";
+import { setAnswersContext } from "../functions/useSetAnswersContext";
 
 export default function Answers({answer, answerClass, selectAnAnswer}) {
 

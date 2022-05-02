@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
-import { checkAnswers } from "./functions/checkAnswers";
-import { checkCorrectAnswerNb } from "./functions/checkCorrectAnswerNb";
-import { setNewGame } from "./functions/setNewGame";
-import { mapQuestions } from "./functions/mapQuestions";
-import { SetAnswersProvider } from "./functions/setAnswersContext";
+import { checkAnswers } from "./functions/useCheckAnswers";
+import { checkCorrectAnswerNb } from "./functions/useCheckCorrectAnswerNb";
+import { setNewGame } from "./functions/useSetNewGame";
+import { mapQuestions } from "./functions/useMapQuestions";
+import { SetAnswersProvider } from "./functions/useSetAnswersContext";
 
 import Homepage from "./components/Homepage";
 import Footer from "./components/Footer";

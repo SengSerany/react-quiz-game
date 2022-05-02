@@ -1,8 +1,8 @@
 import React from "react";
 import Answers from "../components/Answers";
 
-import { checkAnswerClass } from "./checkAnswersClass";
-import { selectAnAnswer } from "../functions/selectAnAnswer";
+import { checkAnswerClass } from "./useCheckAnswersClass";
+import { selectAnAnswer } from "./useSelectAnAnswer";
 
 export function mapAnswers( answersSort ) {
     return answersSort.map( answer => {
