@@ -1,19 +1,16 @@
-import React from "react";
-import { SetAnswersConsumer } from "../functions/setAnswersContext";
+import React, { useContext } from "react";
+import { setAnswersContext } from "../functions/setAnswersContext";
 
 export default function Answers({answer, answerClass, selectAnAnswer}) {
 
+    const setAnswers = useContext(setAnswersContext)
+
     return(
-        <SetAnswersConsumer>
-            { setAnswers => (
-                <div
-                    id={answer.id}
-                    className={answerClass}
-                    onClick={() => selectAnAnswer(answer.id, answer.question_id, setAnswers)}>
-                    {answer.value}
-                </div>
-            )}
-        </SetAnswersConsumer>
-        
+        <div
+            id={answer.id}
+            className={answerClass}
+            onClick={() => selectAnAnswer(answer.id, answer.question_id, setAnswers)}>
+            {answer.value}
+        </div>     
     )
 }

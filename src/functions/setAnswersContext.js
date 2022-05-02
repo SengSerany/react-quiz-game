@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-const { Provider, Consumer } = React.createContext()
+const setAnswersContext = React.createContext()
 
 class SetAnswersProvider extends Component {
 
     render () {
         return (
-            <Provider value={this.props.value}>
+            <setAnswersContext.Provider value={this.props.value}>
                 { this.props.children }
-            </Provider>
+            </setAnswersContext.Provider>
         )
     }
     
 }
 
-export { SetAnswersProvider, Consumer as SetAnswersConsumer }
+export { SetAnswersProvider, setAnswersContext }
