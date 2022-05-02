@@ -1,16 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 const setAnswersContext = React.createContext()
 
-class SetAnswersProvider extends Component {
-
-    render () {
-        return (
-            <setAnswersContext.Provider value={this.props.value}>
-                { this.props.children }
-            </setAnswersContext.Provider>
-        )
-    }
-    
+function SetAnswersProvider(props) {
+    return (
+        <setAnswersContext.Provider value={props.value}>
+            { props.children }
+        </setAnswersContext.Provider>
+    )
 }
 
 export { SetAnswersProvider, setAnswersContext }
